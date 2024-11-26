@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Project Feed</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            padding-top: 70px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.75rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 50px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            margin-left: 100px;
+        }
+
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            width: 300px;
+            margin-right: 2rem;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-self: end;
+        }
+
+         .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #0D6EFD;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+
+        .filters {
+            background-color: #0D6EFD;
+            color: white;
+            padding: 1.25rem;
+            border-radius: 10px;
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+            font-size: 0.9rem;
+        }
+
+        .filter-category {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .filter-content {
+            display: none;
+            padding: 0.5rem 0;
+        }
+
+        .filter-content.active {
+            display: block;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0;
+            cursor: pointer;
+        }
+
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+
+        .project-header {
+            margin-bottom: 0.75rem;
+        }
+        .project-title {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-meta {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .project-description {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.75rem 0;
+        }
+
+        .tag {
+            background: #E7F1FF;
+            color: #0D6EFD;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .read-more-btn {
+            display: block;
+            width: 100%;
+            background: #0D6EFD;
+            color: white;
+            padding: 0.6rem;
+            text-align: center;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+
+
+        .checkbox-label input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+        }
+        .hidden {
+    display: none !important;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">TeamUp</a>
+            <div class="nav-links">
+                <input type="search" placeholder="Search projects..." class="search-box" id="searchInput">
+            </div>
+            <div class="user-section">
+                <div class="user-avatar">{{ user_name[0] }}</div>
+                <span>{{ user_name }}</span>
+                <i class="fas fa-cog settings-icon"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <aside class="filters">
+                <h2>Filters</h2>
+                <div id="filters-container">
+
+                </div>
+
+
+            </aside>
+            <section class="projects-section">
+                <div class="projects-grid" id="projects-container">
+                    {% for project in projects %}
+                    <article class="project-card" data-tags='{{ project.tags|tojson|safe }}'>
+                        <div class="project-header">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <div class="project-meta">
+                                <span>{{ project.author }}</span>
+                            </div>
+                        </div>
+                        <div class="tags">
+                            {% for tag in project.tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <p class="project-description">{{ project.description }}</p>
+                        <a href="{{ url_for('project_details', project_id=project.id) }}" class="read-more-btn">Read More</a>
+
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+    // Filter categories and options
+    const filterCategories = {
+        programming: {
+            title: "Programming Languages",
+            options: ['JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'PHP', 'C#', 'Go', 'Swift', 'Rust', 'TypeScript', 'Kotlin', 'Dart', 'Scala']
+        },
+        webdev: {
+            title: "Web Development",
+            options: ['HTML', 'CSS', 'React', 'Angular', 'Node.js', 'Vue.js']
+        },
+        design: {
+            title: "Design Tools",
+            options: ['Figma', 'Sketch', 'Photoshop', 'Illustrator', 'InVision']
+        },
+        datascience: {
+            title: "Data Science/AI",
+            options: ['Pandas', 'NumPy', 'TensorFlow', 'R', 'SQL']
+        },
+        mobile: {
+            title: "Mobile Development",
+            options: ['Swift', 'Kotlin', 'React Native', 'Flutter']
+        },
+        devops: {
+            title: "DevOps & Cloud",
+            options: ['Docker', 'Kubernetes', 'AWS', 'Azure', 'GCP']
+        },
+        testing: {
+            title: "Testing & QA",
+            options: ['Selenium', 'Jest', 'Mocha', 'Cypress']
+        },
+        business: {
+            title: "Business & Marketing",
+            options: ['Digital Marketing', 'SEO', 'Content Strategy', 'Sales']
+        }
+    };
+
+    // Generate filters
+    const filtersContainer = document.getElementById('filters-container');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    Object.entries(filterCategories).forEach(([key, category]) => {
+        const filterCategory = document.createElement('div');
+        filterCategory.className = 'filter-category';
+        filterCategory.innerHTML = `
+            <div class="filter-header">
+                <h3>${category.title}</h3>
+                <span>▼</span>
+            </div>
+            <div class="filter-content">
+                ${category.options.map(option => `
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="${option}" onchange="filterProjects()">
+                        ${option}
+                    </label>
+                `).join('')}
+            </div>
+        `;
+        filtersContainer.appendChild(filterCategory);
+    });
+
+
+    document.querySelectorAll('.filter-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+            header.querySelector('span').textContent =
+                content.classList.contains('active') ? '▲' : '▼';
+        });
+    });
+
+    // Фільтрація проєктів
+    function filterProjects() {
+        const selectedFilters = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+            .map(checkbox => checkbox.value);
+
+        projectCards.forEach(card => {
+            const projectTags = JSON.parse(card.dataset.tags);
+
+            if (selectedFilters.length === 0) {
+                // Якщо не вибрано жодного фільтра, показуємо всі проєкти
+                card.classList.remove('hidden');
+            } else {
+                // Перевіряємо, чи є хоча б одна спільна навичка
+                const hasMatchingTag = selectedFilters.some(filter =>
+                    projectTags.includes(filter)
+                );
+
+                if (hasMatchingTag) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    // Додаємо пошук по назві, опису та тегах
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        const searchText = searchInput.value.toLowerCase();
+
+        projectCards.forEach(card => {
+            const title = card.querySelector('.project-title').textContent.toLowerCase();
+            const description = card.querySelector('.project-description').textContent.toLowerCase();
+            const tags = JSON.parse(card.dataset.tags); // Отримуємо теги проекту
+
+            // Перевіряємо, чи є співпадіння з назвами, описами чи тегами
+            const hasMatchingText = title.includes(searchText) || description.includes(searchText);
+            const hasMatchingTag = tags.some(tag => tag.toLowerCase().includes(searchText));
+
+            if (hasMatchingText || hasMatchingTag) {
+                card.classList.remove('hidden'); // Показуємо проект
+            } else {
+                card.classList.add('hidden'); // Приховуємо проект
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

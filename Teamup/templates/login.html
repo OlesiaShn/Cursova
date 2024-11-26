@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Login/Signup</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+        .container {
+            display: flex;
+            width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-section {
+            flex: 1;
+            padding: 40px;
+        }
+        .info-section {
+            flex: 1;
+            background-color: #007bff;
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .info-content {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            right: 40px;
+            transform: translateY(-50%);
+            transition: opacity 0.5s;
+        }
+        .info-content h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .info-content p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .slider-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .slider-dot.active {
+            background-color: white;
+        }
+        .arrow {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .checkbox-container input {
+            width: auto;
+            margin-right: 10px;
+        }
+        .forgot-password {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <a href="{{ url_for('landing_page') }}" class="back-link">< Back to website</a>
+            <h1>Login</h1>
+
+            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+            <h2>Welcome Back!</h2>
+            <form method="POST" action="{{ url_for('login') }}">
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember Me</label>
+                    
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div class="info-section">
+            <div class="info-content" id="slide1">
+                <h2>TeamUp</h2>
+                <p>Welcome Back to the Team!</p>
+                <p>We're excited to see what you'll achieve next. Let's make it incredible!</p>
+            </div>
+            <div class="info-content" id="slide2" style="opacity: 0;">
+                <h2>Welcome Back to Your Network</h2>
+                <p>Reconnect with your team and projects. The next great idea starts here.</p>
+                <h2>Pick Up Where You Left Off</h2>
+                <p>Your projects and connections are waiting. Let's get back to work.</p>
+                <h2>Your Next Breakthrough Awaits</h2>
+                <p>Sign in and continue your journey. Let's create something amazing together.</p>
+            </div>
+            <div class="slider-nav">
+                <div class="slider-dot active" onclick="showSlide(1)"></div>
+                <div class="slider-dot" onclick="showSlide(2)"></div>
+            </div>
+            <div class="arrow" onclick="nextSlide()">→</div>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 1;
+        function showSlide(slideNumber) {
+            document.getElementById('slide1').style.opacity = slideNumber === 1 ? 1 : 0;
+            document.getElementById('slide2').style.opacity = slideNumber === 2 ? 1 : 0;
+            document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === slideNumber);
+            });
+            currentSlide = slideNumber;
+        }
+        function nextSlide() {
+            showSlide(currentSlide === 1 ? 2 : 1);
+        }
+    </script>
+</body>
+</html>

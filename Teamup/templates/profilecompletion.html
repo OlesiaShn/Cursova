@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Complete Your Profile</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .required::after {
+            content: "*";
+            color: red;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 48px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        input:required, textarea:required {
+            box-shadow: none;
+        }
+
+        ::placeholder {
+            color: #999;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the team!</h1>
+        <p class="subtitle">Add more information so your colleagues get to know you better.</p>
+
+        <form action="/profilecompletion" method="POST">
+            <div class="form-group">
+                <label class="required">Short biography</label>
+                <textarea name="biography" placeholder="Tell us about yourself" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Work experience</label>
+                <textarea name="work_experience" placeholder="Describe your experience in past projects or professional roles" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>LinkedIn</label>
+                <input type="url" name="linkedin" placeholder="Add a LinkedIn link" pattern="https?://.*" title="Please enter a valid URL starting with http:// or https://">
+            </div>
+
+            <div class="form-group">
+                <label>Portfolio (URL)</label>
+                <input type="url" name="portfolio" placeholder="GitHub, Behance, or other platforms to showcase your work" pattern="https?://.*" title="Please enter a valid URL starting with http:// or https://">
+            </div>
+
+            <div class="submit-container">
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const biography = document.querySelector('textarea[name="biography"]').value.trim();
+            const workExperience = document.querySelector('textarea[name="work_experience"]').value.trim();
+            
+            if (!biography || !workExperience) {
+                e.preventDefault();
+                alert('Please fill in both biography and work experience fields');
+            }
+        });
+    </script>
+</body>
+</html>

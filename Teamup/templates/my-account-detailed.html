@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - TeamUp</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: auto;
+            background-color: #f0f2f5;
+            padding-top: 40px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            font-size: 28px;
+            color: #1877f2;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #e4e6eb;
+            margin-right: 20px;
+        }
+        .profile-info h2 {
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .profile-info p {
+            color: #65676b;
+            text-align: left;
+        }
+        .personal-info h3 {
+            margin-bottom: 20px;
+            color: #1877f2;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #1877f2;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .skills-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            color: white;
+            background-color: #1877f2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <a href="{{ url_for('landing_page') }}" class="back-link">< Back to website</a>
+        <h1>My Account</h1>
+        
+        <div class="profile-header">
+            <div class="profile-pic"></div>
+            <div class="profile-info">
+                <h2>Olesia Shnaider</h2>
+                <p>Developer</p>
+                <p>Ukraine</p>
+            </div>
+        </div>
+
+        <div class="personal-info">
+            <h3>Personal Information</h3>
+            <form>
+                <div class="form-group">
+                    <label for="firstName">First name</label>
+                    <input type="text" id="firstName" name="firstName" value="Olesia">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="lastName" name="lastName" value="Shnaider">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" value="myemail@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <input type="text" id="role" name="role" value="Developer">
+                </div>
+                <div class="form-group">
+                    <label for="skills">Skills</label>
+                    <select id="skills" name="skills" class="skills-select">
+                        <option value="C++">C++</option>
+                        <option value="Python">Python</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Java">Java</option>
+                        <option value="HTML/CSS">HTML/CSS</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="Go">Go</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Swift">Swift</option>
+                        <option value="Kotlin">Kotlin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn Profile (optional)</label>
+                    <input type="text" id="linkedin" name="linkedin" value="some links">
+                </div>
+                <div class="form-group">
+                    <label for="portfolio">Portfolio (optional)</label>
+                    <input type="text" id="portfolio" name="portfolio" value="some links">
+                </div>
+                <div class="form-group">
+                    <label for="biography">Biography (optional)</label>
+                    <input type="text" id="biography" name="biography" value="hi this is my biography">
+                </div>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Role Selector</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 250px;
+        }
+
+        .action-button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            min-width: 180px;
+            margin-bottom: 15px;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .button-description {
+            font-style: italic;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+            max-width: 220px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .action-button {
+                width: 100%;
+            }
+
+            .button-description {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the team!</h1>
+        <p class="subtitle">Why are you here?</p>
+
+        <form action="{{ url_for('roleselector') }}" method="POST" class="buttons-container">
+            <div class="button-group">
+                <button type="submit" name="role" value="leader" class="action-button">Start a Project</button>
+                <p class="button-description">"Lead your own project, set goals, and build your team."</p>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" name="role" value="member" class="action-button">Join a Team</button>
+                <p class="button-description">"Find projects that match your skills and join the team as a collaborator."</p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

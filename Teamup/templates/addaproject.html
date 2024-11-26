@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Add Your Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .teamup-logo {
+            color: #007bff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .project-form {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f0f7ff;
+            border: 1px solid #007bff;
+            border-radius: 8px;
+        }
+
+        .step {
+            flex-basis: 30%;
+            text-align: center;
+        }
+
+        .step h3 {
+            color: #007bff;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .step p {
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        .step-number {
+            width: 25px;
+            height: 25px;
+            background-color: #007bff;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .skills-select {
+            position: relative;
+        }
+
+        .skills-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .categories-container {
+            display: flex;
+            gap: 30px;
+        }
+
+        .categories-list {
+            width: 200px;
+            border-right: 1px solid #ddd;
+        }
+
+        .category-item {
+            padding: 10px;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+
+        .category-item:hover, .category-item.active {
+            background-color: #f0f7ff;
+            color: #007bff;
+        }
+
+        .skills-list {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skill-item:hover {
+            border-color: #007bff;
+            background-color: #f0f7ff;
+        }
+
+        .skill-item.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .selected-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background-color: #f0f7ff;
+            color: #007bff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+
+        .iti {
+            width: 100%;
+        }
+
+        .iti__flag {
+            background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png");
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .iti__flag {
+                background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags@2x.png");
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="teamup-logo">TeamUp</div>
+        <form class="project-form" action="{{ url_for('addaproject') }}" method="POST">
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Add Your Project</h3>
+                    <p>Share your project details with the community. Describe your vision and required skills to attract potential members.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Receive Team Applications</h3>
+                    <p>Within minutes, members will start applying to join your project. Review applications and connect with people who meet your criteria.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Start Collaborating</h3>
+                    <p>Choose your team members and set your project in motion! Work together to achieve your goals as a team.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-input" placeholder="Give your project a short and clear name" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-textarea" placeholder="Give your project a clear description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Required skills</label>
+                <div class="skills-select">
+                    <button type="button" class="skills-btn" onclick="openModal()">
+                        Select
+                        <span>+</span>
+                    </button>
+                    <div class="selected-skills" id="selectedSkillsContainer"></div>
+
+                    <div id="skillsInputContainer"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Time frames and deadlines</label>
+                <input type="text" name="timeframes" class="form-input" placeholder="Let others know when you want to finish the project" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phone number</label>
+                <input type="tel" id="phone" name="phone" class="form-input" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Publish the project</button>
+        </form>
+    </div>
+
+    <div id="skillsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Required Skills</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="categories-container">
+                <div class="categories-list" id="categoriesList"></div>
+                <div class="skills-list" id="skillsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const categories = {
+            'Programming': ['JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'PHP', 'C#', 'Go', 'Swift', 'Rust', 'TypeScript', 'Kotlin', 'Dart', 'Scala'],
+            'Web Development': ['HTML, CSS', 'React', 'Angular', 'Vue.js', 'Node.js', 'Django', 'Flask', 'Bootstrap', 'Tailwind CSS'],
+            'Design': ['Figma', 'Sketch', 'Photoshop', 'Illustrator', 'Adobe XD', 'InVision', 'CorelDRAW', 'Canva'],
+            'Data Science': ['Pandas', 'NumPy', 'TensorFlow', 'R', 'SQL', 'Scikit-Learn', 'Keras', 'PyTorch', 'MATLAB'],
+            'Mobile Development': ['Swift', 'Kotlin', 'React Native', 'Flutter', 'Ionic'],
+            'DevOps': ['Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud', 'CI/CD', 'Jenkins', 'Ansible'],
+            'Testing': ['Selenium', 'Jest', 'Mocha', 'Cypress', 'JUnit', 'Postman', 'Appium'],
+            'Business': ['Digital Marketing', 'SEO', 'Content Strategy', 'Sales', 'Market Research', 'Brand Strategy', 'Copywriting'],
+            'Other': ['Communication', 'Time Management', 'Problem-Solving', 'Project Management', 'Customer Support', 'Public Speaking']
+        };
+
+        let selectedSkills = new Set();
+        let currentCategory = '';
+
+
+        const phoneInput = window.intlTelInput(document.querySelector("#phone"), {
+            preferredCountries: ["ua"],
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+
+        const categoriesList = document.getElementById('categoriesList');
+        Object.keys(categories).forEach(category => {
+            const div = document.createElement('div');
+            div.className = 'category-item';
+            div.textContent = category;
+            div.onclick = () => showSkills(category);
+            categoriesList.appendChild(div);
+        });
+
+        function showSkills(category) {
+            currentCategory = category;
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = '';
+
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.textContent === category) {
+                    item.classList.add('active');
+                }
+            });
+
+            categories[category].forEach(skill => {
+                const div = document.createElement('div');
+                div.className = `skill-item${selectedSkills.has(skill) ? ' selected' : ''}`;
+                div.textContent = skill;
+                div.onclick = () => toggleSkill(skill, div);
+                skillsList.appendChild(div);
+            });
+        }
+
+        function toggleSkill(skill, element) {
+            if (selectedSkills.has(skill)) {
+                selectedSkills.delete(skill);
+                element.classList.remove('selected');
+            } else {
+                selectedSkills.add(skill);
+                element.classList.add('selected');
+            }
+            updateSelectedSkills();
+        }
+
+        function updateSelectedSkills() {
+            const container = document.getElementById('selectedSkillsContainer');
+            const inputContainer = document.getElementById('skillsInputContainer');
+            container.innerHTML = '';
+            inputContainer.innerHTML = ''; // Clear previous inputs
+
+            selectedSkills.forEach(skill => {
+                // Create visual tag
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `
+                    ${skill}
+                    <button type="button" onclick="removeSkill('${skill}')">&times;</button>
+                `;
+                container.appendChild(tag);
+
+                // Create hidden input
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'skills[]';
+                input.value = skill;
+                inputContainer.appendChild(input);
+            });
+        }
+
+        function removeSkill(skill) {
+            selectedSkills.delete(skill);
+            updateSelectedSkills();
+            if (currentCategory) {
+                showSkills(currentCategory);
+            }
+        }
+
+        function openModal() {
+            document.getElementById('skillsModal').style.display = 'block';
+            if (!currentCategory) {
+                showSkills(Object.keys(categories)[0]);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('skillsModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('skillsModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+
+        document.querySelector('.project-form').onsubmit = function(e) {
+            // Get the full phone number including country code
+            const phoneInput = document.querySelector('#phone');
+            const iti = window.intlTelInputGlobals.getInstance(phoneInput);
+            phoneInput.value = iti.getNumber();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Create, Innovate, Cooperate</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+       
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-secondary {
+            background-color: #fff;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+        main {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .hero-content {
+            flex: 1;
+        }
+        .hero-image {
+            flex: 1;
+            background-color: #007bff;
+            color: #fff;
+            padding: 3rem;
+            border-radius: 10px;
+        }
+        .hero-image h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1.5rem;
+        }
+        .read-more {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .read-more::after {
+            content: " →";
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">TeamUp</div>
+                
+                <div class="auth-buttons">
+                    <!-- Додаємо посилання на сторінку для реєстрації та входу -->
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+                    <a href="{{ url_for('signup') }}" class="btn btn-primary">SignUp</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="hero">
+                <div class="hero-image">
+                    <h2>Create.<br>Innovate.<br>Cooperate.</h2>
+                    <!-- Тут також додаємо посилання на сторінки для кнопок -->
+                    <a href="{{ url_for('signup') }}" class="btn btn-secondary">SignUp</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+                </div>
+                <div class="hero-content">
+                    <h1>TeamUp</h1>
+                    <p>Turn your idea into reality with the right team. Post your project, specify your needs, and find passionate partners to help you succeed.</p>
+                    <a href="{{ url_for('read_more') }}" class="read-more">Read more</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

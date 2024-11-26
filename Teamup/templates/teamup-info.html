@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is TeamUp?</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+        
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+        
+        .btn-secondary {
+            background-color: #fff;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .info-section {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            color: #007bff;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .description {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+        }
+
+        .features {
+            margin-bottom: 3rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature::before {
+            content: "•";
+            color: #007bff;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            line-height: 1.4;
+        }
+
+        .tagline {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+
+        .tagline strong {
+            color: #007bff;
+        }
+
+        .steps-section {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .steps-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .step-header {
+            padding: 1rem;
+            background: #007bff;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+        }
+
+        .step-content.active {
+            padding: 1rem;
+            max-height: 300px;
+        }
+
+        .tip {
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .step-header.active .expand-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('landing_page') }}" class="logo">TeamUp</a>
+            
+            <div class="auth-buttons">
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('signup') }}" class="btn btn-primary">SignUp</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="info-section">
+            <div class="container">
+                <h1 class="section-title">What is TeamUp?</h1>
+                <p class="description">TeamUp is an innovative platform designed to connect professionals, creators, and entrepreneurs who are looking for like-minded partners to bring their projects to life. Whether you're a developer searching for a co-founder, a designer looking for a new challenge, or an entrepreneur with a vision, TeamUp makes it easier to find the right people and collaborate effectively.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div>Find the Right Fit: Easily discover talented individuals who share your passion and skills for various IT projects, startups, or freelance collaborations.</div>
+                    </div>
+                    <div class="feature">
+                        <div>Post Your Project: Share your ideas, outline the skills you need, and let the right people find you.</div>
+                    </div>
+                    <div class="feature">
+                        <div>Expand Your Network: Collaborate with a diverse community of professionals and turn your ideas into reality.</div>
+                    </div>
+                    <div class="feature">
+                        <div>Simplified Collaboration: Our platform streamlines communication and project management, so your team can focus on what really matters—building something amazing.</div>
+                    </div>
+                </div>
+
+                <p class="tagline">At <strong>TeamUp</strong>, we believe that the right team is the key to success. With us, building that dream team is easier than ever!</p>
+            </div>
+        </section>
+
+        <section class="steps-section">
+            <div class="container">
+                <h2 class="section-title">How to Use TeamUp?</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-header">
+                            <h3>Step 1: Create an Account</h3>
+                            <span class="expand-icon">+</span>
+                        </div>
+                        <div class="step-content">
+                            <p>Start by signing up for a free account. Enter your basic information like name, email, and password, and you're ready to go.</p>
+                            <p class="tip">Tip: Don't forget to upload a profile picture to stand out!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <h3>Step 2: Build Your Profile</h3>
+                            <span class="expand-icon">+</span>
+                        </div>
+                        <div class="step-content">
+                            <p>After registering, enhance your profile with skills, experience, and preferred roles. This helps you connect with users who match your project interests.</p>
+                            <p class="tip">Tip: Be specific about your expertise and what you are looking for.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <h3>Step 3: Search for Teammates</h3>
+                            <span class="expand-icon">+</span>
+                        </div>
+                        <div class="step-content">
+                            <p>Got a project in mind? Post it! Share all the necessary details: the project's goal, required skills, and timeline. Our system will help connect you with the right people. Or join someone's project that suits your interests.</p>
+                            <p class="tip">Tip: A detailed project description increases your chances of finding the perfect teammates.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <h3>Step 4: Find Collaborators</h3>
+                            <span class="expand-icon">+</span>
+                        </div>
+                        <div class="step-content">
+                            <p>Browse through profiles of talented individuals ready to collaborate.</p>
+                            <p class="tip">Tip: Reach out to potential collaborators by contacting them.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <h3>Step 5: Start Working Together</h3>
+                            <span class="expand-icon">+</span>
+                        </div>
+                        <div class="step-content">
+                            <p>Once your team is assembled, it's time to start working! Use TeamUp to stay connected, share updates, and track progress.</p>
+                            <p class="tip">Tip: Communication is key to successful collaboration—keep your team engaged and informed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.querySelectorAll('.step-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Close all step contents
+                document.querySelectorAll('.step-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.querySelectorAll('.step-header').forEach(header => {
+                    header.classList.remove('active');
+                });
+                
+                // Open clicked step if it wasn't active
+                if (!isActive) {
+                    content.classList.add('active');
+                    header.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

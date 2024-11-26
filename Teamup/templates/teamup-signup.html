@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Sign Up</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+        .container {
+            display: flex;
+            width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-section {
+            flex: 1;
+            padding: 40px;
+        }
+        .info-section {
+            flex: 1;
+            background-color: #007bff;
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .info-content {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            right: 40px;
+            transform: translateY(-50%);
+            transition: opacity 0.5s;
+        }
+        .info-content h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .info-content p {
+            margin-bottom: 10px;
+        }
+        .slider-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .slider-dot.active {
+            background-color: white;
+        }
+        .arrow {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #preview {
+            margin-top: 10px;
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <a href="{{ url_for('landing_page') }}" class="back-link">< Back to website</a>
+            <h1>Sign Up</h1>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+
+                <form action="/signup" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                 <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                   
+
+
+                
+                <button type="submit">Submit ></button>
+            </form>
+        </div>
+        <div class="info-section">
+            <div class="info-content" id="slide1">
+                <h2>TeamUp</h2>
+                <p>Looking for a co-founder, developer, or designer for your next IT project? Create a project profile, outline your needs, and connect with skilled professionals ready to help you bring your vision to life.</p>
+            </div>
+            <div class="info-content" id="slide2" style="opacity: 0;">
+                <h2>Find Your Perfect Team</h2>
+                <p>Connect with talented individuals who share your vision.</p>
+                <h2>Empower Your Journey</h2>
+                <p>Team up with experts and take your project to the next level.</p>
+                <h2>Discover New Opportunities</h2>
+                <p>Explore projects and partners that align with your goals.</p>
+            </div>
+            <div class="slider-nav">
+                <div class="slider-dot active" onclick="showSlide(1)"></div>
+                <div class="slider-dot" onclick="showSlide(2)"></div>
+            </div>
+            <div class="arrow" onclick="nextSlide()">→</div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        function showSlide(slideNumber) {
+            document.getElementById('slide1').style.opacity = slideNumber === 1 ? 1 : 0;
+            document.getElementById('slide2').style.opacity = slideNumber === 2 ? 1 : 0;
+            document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === slideNumber);
+            });
+            currentSlide = slideNumber;
+        }
+        function nextSlide() {
+            showSlide(currentSlide === 1 ? 2 : 1);
+        }
+        
+
+        function previewFile() {
+            const file = document.getElementById('fileInput').files[0];
+            const preview = document.getElementById('preview');
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+                preview.style.display = 'none';
+            }
+        }
+
+
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const password = document.querySelector("input[name='password']").value;
+            const confirmPassword = document.querySelector("input[name='confirm_password']").value;
+            if (password !== confirmPassword) {
+                e.preventDefault(); 
+                alert("Passwords do not match!");
+            }
+        });
+    </script>
+</body>
+</html>

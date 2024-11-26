@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp - Project Details</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            line-height: 1.6;
+            padding-top: 70px;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.75rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 50px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #0D6EFD;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .project-details {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .project-meta {
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            background: #E7F1FF;
+            color: #0D6EFD;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .project-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .section-content {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .apply-btn {
+            background: #0D6EFD;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .apply-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('projects') }}" class="logo">TeamUp</a>
+            <div class="user-section">
+                <div class="user-avatar">{{ user_initial|default('O') }}</div>
+                <span>{{ username|default('User') }}</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Кнопка "Back", що веде на список проєктів -->
+        <a href="{{ url_for('projectsforall') }}" class="back-link">&lt; Back</a>
+
+
+        <div class="project-details">
+            <div class="project-header">
+                <div>
+
+                    <h1 class="project-title">{{ project.name }}</h1>
+                    <div class="project-meta">
+
+                        <span>{{ project.author }}</span>
+                        <span>•</span>
+                        <span>{{ project.created_at.strftime('%Y-%m-%d') }}</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tags">
+                {% for skill in project.skills %}
+                <span class="tag">{{ skill }}</span>
+                {% endfor %}
+            </div>
+
+
+            <div class="project-section">
+                <h2 class="section-title">Description</h2>
+                <p class="section-content">{{ project.description }}</p>
+            </div>
+
+
+            <div class="project-section">
+                <h2 class="section-title">Time frames and deadlines:</h2>
+                <p class="section-content">{{ project.timeframes }}</p>
+            </div>
+
+
+            <div class="project-section">
+    <h2 class="section-title">Contact:</h2>
+    <div class="contact-info">
+        <p class="section-content">{{ project.phone_number }}</p>
+    </div>
+</div>
+
+
+            <button class="apply-btn">Apply</button>
+        </div>
+    </div>
+</body>
+
+</html>
